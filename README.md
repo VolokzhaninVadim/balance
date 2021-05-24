@@ -87,5 +87,7 @@ self.driver.find_element_by_css_selector('#login-input').send_keys(f"{self.alfa_
 # Закрываем браузер
 alfa_scraper.close_all()
 ```
+## Отображение результат
+Результат отображается через [conky](https://github.com/VolokzhaninVadim/conky).
 
 
