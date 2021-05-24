@@ -94,7 +94,7 @@ with DAG(
     description = "Получение балансов"
     ,default_args = default_args
     ,catchup = False
-    ,schedule_interval = "0 */3 * * *"
+    ,schedule_interval = "0 */5 * * *"
     ,tags=['balance_loader']) as dag:
 
 # Получаем баланс Альфа-Банк
