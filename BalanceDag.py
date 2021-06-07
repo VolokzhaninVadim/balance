@@ -109,6 +109,10 @@ with DAG(
         python_callable = telecom_scraper, 
         dag = dag
         ) 
+    kill_chrome = BashOperator(
+        task_id = 'kill_chrome'
+        ,bash_command='killall chrome'
+    )
 
 # Порядок выполнения задач
-    balance_alfa >> balance_telecom  
+    kill_chrome >> balance_alfa >> balance_telecom  
