@@ -111,7 +111,7 @@ with DAG(
         ) 
     kill_chrome = BashOperator(
         task_id = 'kill_chrome'
-        ,bash_command='killall chrome'
+        ,bash_command='pkill chrome'
     )
 
 # Порядок выполнения задач
