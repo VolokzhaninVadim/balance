@@ -77,6 +77,19 @@ def telecom_scraper():
         )
     telecom_scraper.data()
 
+def close_chrome(): 
+    """
+    Закрытие процессов chrome.
+    Вход: 
+        нет.
+    Выход: 
+        нет.
+    """    
+    if subprocess.call(["pkill", "chrome"]) == 0:
+        print('ok') 
+    else:
+        print('нет процессов') 
+
 # Вводим по умолчанию аргументы dag
 default_args = {
     'owner': 'Volokzhanin Vadim',
@@ -109,10 +122,13 @@ with DAG(
         python_callable = telecom_scraper, 
         dag = dag
         ) 
-    kill_chrome = BashOperator(
-        task_id = 'kill_chrome'
-        ,bash_command='pkill chrome'
-    )
+
+# Закрываем процессы chrome
+    kill_chrome = PythonOperator(
+        task_id = "kill_chrome", 
+        python_callable = close_chrome, 
+        dag = dag
+        )
 
 # Порядок выполнения задач
     kill_chrome >> balance_alfa >> balance_telecom  
