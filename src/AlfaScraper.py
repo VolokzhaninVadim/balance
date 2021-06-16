@@ -131,7 +131,7 @@ class AlfaScraper():
         """
         self.driver.get(self.websites['google'])
         time.sleep(10)
-        if 'Alfa Bank' in str(self.driver.page_source):
+        if 'Alfa-Bank' in str(self.driver.page_source):
             self.check_use_pc()
             return True
         else:
@@ -165,7 +165,7 @@ class AlfaScraper():
                 sms_text = bsObj.find_all('div', {'class' : 'bottom-anchored-scroll-pad'})[0].text
                 sms_list = re.findall('Пароль для входа - \d{1,10}', sms_text)
                 if sms_list: 
-                    sms_list = [int(re.sub('Пароль для входа - ', '', i)) for i in sms_list]
+                    sms_list = [re.sub('Пароль для входа - ', '', i) for i in sms_list]
                     return sms_list[len(sms_list) - 1]
         else: 
             return None
