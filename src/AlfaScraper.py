@@ -208,13 +208,13 @@ class AlfaScraper():
 # Если нам не нужно логинится, то сразу выполняем сбор данных
         try: 
 # Посылаем логин и пароль Alfa
-            #self.driver.find_element_by_css_selector('#login-input').send_keys(f"{self.alfa_login}")
-            self.driver.find_element_by_css_selector('.input__addons').click()
+            self.driver.find_element_by_css_selector('.input__input_15rsh').send_keys(f"{self.alfa_login}")
+            self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[2]/form/button').click()
             time.sleep(10)
         
 # Отсылаем пароль
-            self.driver.find_element_by_css_selector('#password-input').send_keys(f"{self.alfa_password}")
-            self.driver.find_element_by_css_selector('.input__addons').click()
+            self.driver.find_element_by_css_selector('.input__input_15rsh').send_keys(f"{self.alfa_password}")
+            self.driver.find_element_by_css_selector('button.button__component_pa94q:nth-child(4)').click()
             time.sleep(10)
 
 # Переключаемся на первую вкладку с смс
@@ -224,7 +224,7 @@ class AlfaScraper():
             if sms: 
 # Переключаемся на первую вкладку с Alafa и отсылаем пароль
                 self.driver.switch_to.window(self.driver.window_handles[1])
-                self.driver.find_element_by_css_selector('.input__control').send_keys(f"{sms}")
+                self.driver.find_element_by_css_selector('input.confirmation__input_h4rfk:nth-child(1)').send_keys(f"{sms}")
                 time.sleep(10)
 
 # Получаем данные по счетам
