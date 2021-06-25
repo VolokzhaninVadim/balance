@@ -80,10 +80,6 @@ alfa_scraper.driver.save_screenshot('/share/screenshot.png')
 # Запоминаем ПК в профиле пользователя chrome
 alfa_scraper.check_use_pc()
 
-# В функции accounts расскомментируем строку
-self.driver.find_element_by_css_selector('#login-input').send_keys(f"{self.alfa_login}")
-# После выполнения опять необходимо закомментировать, так как в профиле логин будет заполняться автоматически и необходимо будет заполнить только пароль
-
 # Закрываем браузер
 alfa_scraper.close_all()
 ```
