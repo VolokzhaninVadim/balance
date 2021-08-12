@@ -209,7 +209,7 @@ class AlfaScraper():
         try: 
 # Посылаем логин и пароль Alfa
 #             self.driver.find_element_by_css_selector('.input__input_15rsh').send_keys(f"{self.alfa_login}")
-            self.driver.find_element_by_xpath('span.button__text_1idfl:nth-child(1)').click()
+            self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[2]/form/button').click()
             time.sleep(10)
         
 # Отсылаем пароль
@@ -225,14 +225,10 @@ class AlfaScraper():
 # Переключаемся на первую вкладку с Alafa и отсылаем пароль
                 self.driver.switch_to.window(self.driver.window_handles[1])
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[1]').send_keys(f"{sms[0]}")
-                time.sleep(2)
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[2]').send_keys(f"{sms[1]}")
-                time.sleep(2)
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[3]').send_keys(f"{sms[2]}")
-                time.sleep(2)
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[4]').send_keys(f"{sms[3]}")
-                time.sleep(2)
-
+            time.sleep(10)
 # Получаем данные по счетам
             bsObj = BeautifulSoup(self.driver.page_source, 'html5lib') 
             result = self.html_to_accounts(bsObj)
