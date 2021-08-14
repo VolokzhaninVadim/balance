@@ -210,7 +210,7 @@ class AlfaScraper():
 # Посылаем логин и пароль Alfa
 #             self.driver.find_element_by_css_selector('.input__input_15rsh').send_keys(f"{self.alfa_login}")
             self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[2]/form/button').click()
-            time.sleep(10)
+            time.sleep(20)
         
 # Отсылаем пароль
             self.driver.find_element_by_css_selector('.input__input_1t739').send_keys(f"{self.alfa_password}")
