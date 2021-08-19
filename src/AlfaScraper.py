@@ -204,7 +204,7 @@ class AlfaScraper():
         self.driver.execute_script(f"window.open('{self.websites['alfa']}');")
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.set_window_size(1920, 1080)
-        time.sleep(10)
+        time.sleep(15)
 # Если нам не нужно логинится, то сразу выполняем сбор данных
         try: 
 # Посылаем логин и пароль Alfa
@@ -229,7 +229,7 @@ class AlfaScraper():
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[2]').send_keys(f"{sms[1]}")
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[3]').send_keys(f"{sms[2]}")
                 self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[2]/div/div[1]/div/input[4]').send_keys(f"{sms[3]}")
-            time.sleep(10)
+            time.sleep(15)
 # Получаем данные по счетам
             bsObj = BeautifulSoup(self.driver.page_source, 'html5lib') 
             result = self.html_to_accounts(bsObj)
