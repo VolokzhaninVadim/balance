@@ -215,7 +215,7 @@ class AlfaScraper():
 # Отсылаем пароль
             self.driver.find_element_by_css_selector('.input__input_1t739').send_keys(f"{self.alfa_password}")
             time.sleep(15)
-            self.driver.find_element_by_css_selector('button.button__component_pa94q:nth-child(4)').click()
+            self.driver.find_element_by_css_selector('button.button__component_1idfl:nth-child(4)').click()
             time.sleep(15)
 
 # Переключаемся на первую вкладку с смс
