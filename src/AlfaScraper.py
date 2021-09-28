@@ -60,13 +60,14 @@ class AlfaScraper():
             download_dir - директория сохранения выписок. 
             websites - словарь сайтов. 
         """
+        self.ids = [5, 6, 7]
         self.alfa_login = alfa_login
         self.alfa_password = alfa_password
         self.engine = engine
         self.conn = conn
         self.user_data_dir = user_data_dir
         self.websites = websites
-        self.download_dir = download_dir
+        self.download_dir = download_dir        
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
@@ -213,9 +214,9 @@ class AlfaScraper():
             time.sleep(15)
         
 # Отсылаем пароль
-            self.driver.find_element_by_css_selector('.input__input_1t739').send_keys(f"{self.alfa_password}")
+            self.driver.find_element_by_css_selector('.input__input_164yb').send_keys(f"{self.alfa_password}")
             time.sleep(15)
-            self.driver.find_element_by_css_selector('button.button__component_1idfl:nth-child(4)').click()
+            self.driver.find_element_by_css_selector('button.button__component_1du1k:nth-child(4)').click()
             time.sleep(15)
 
 # Переключаемся на первую вкладку с смс
@@ -246,15 +247,15 @@ class AlfaScraper():
         Выход: 
             баланс из dwh.
         """
-
-        query = """
+        ids = ', '.join([str(i) for i in self.ids])
+        query = f"""
         select 
                  id
                  ,balance
         from 
                 balance.balance
         where 
-                id in (5, 6, 7)
+                id in ({ids})
         order by
                 id
         """
@@ -277,12 +278,22 @@ class AlfaScraper():
 
 # Получаем текущий баланс
         current_balance_df = self.get_balance()
-
+    
+# Если в таблице нет записей, то подставляем 0 и записываем их в таблицу
+        if current_balance_df.shape[0] == 0:
+            current_balance_df = pd.DataFrame({'id' : self.ids, 'balance' : [0, 0, 0]})             
+            current_balance_df.to_sql(
+                name = 'balance'
+                ,con = self.engine
+                ,schema = 'balance'
+                ,if_exists = 'append'
+                ,index = False
+            )
 # Получаем баланс Alfa
         accounts_values = self.accounts()
         if accounts_values:
             balance_df = pd.DataFrame(data = accounts_values, columns = ['balance'])
-            balance_df['id'] = [5, 6, 7]
+            balance_df['id'] = self.ids
 
 # Ищем строки, которые не совпадают
             result_balance_df = current_balance_df.merge(right = balance_df, on = ['id'])
@@ -373,7 +384,7 @@ class AlfaScraper():
                     ,sep = ';'
                     ,dtype = {'Комментарий': 'object'}
                     ,error_bad_lines = False
-                    ,engine="python"
+                    ,engine = "python"
                 )
                 account_statement_df = pd.concat([curent_df, account_statement_df])
                 account_statement_df.columns = ['date', 'type', 'category', 'sum', 'currency', 'account', 'description', 'comment']

@@ -80,7 +80,7 @@ class TelecomScraper:
         Вход: 
             id_value(int) - id текущего баланса.
         Выход: 
-            balance_df(DataFrame) - баланс из dwh.
+            result(int) - баланс из dwh.
         """
 
         query = """
@@ -90,12 +90,26 @@ class TelecomScraper:
         where id = {id_value}
         """.format(id_value = id_value)
 
-        # Получаем данные из dwh
+# Получаем данные из dwh
         balance_df = pd.read_sql(
             sql = query,
             con = self.engine
         )
-        return balance_df.balance[0]
+        
+# Если таблица не заполнена, то возвращаем 0 и записываем в таблицу
+        if balance_df.shape[0] == 0: 
+            balance_df = pd.DataFrame({'id' : [id_value], 'balance' : [0]})
+            balance_df.to_sql(
+                name = 'balance'
+                ,con = self.engine
+                ,schema = 'balance'
+                ,if_exists = 'append'
+                ,index = False
+            )
+            result = 0
+        else: 
+            result = balance_df.balance[0]        
+        return result
 
     def write_balance(self, current_balance, id_value):
         """
